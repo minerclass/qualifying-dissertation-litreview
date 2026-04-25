@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Literature, Read in Position | A Qualifying Paper Companion</title>
+<meta name="description" content="An interactive literature review companion for a qualifying paper on tertiary algorithmicity and pedagogical friction.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300..700;1,300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #060a08;
+    --bg-2: #0a110d;
+    --ink: #e8e0c8;
+    --ink-dim: #94927e;
+    --ink-faded: #5a5a48;
+    --emerald: #4a8068;
+    --emerald-bright: #6ba588;
+    --bronze: #b08550;
+    --bronze-bright: #d4a268;
+    --plum: #6a4868;
+    --slate: #4a5a6a;
+    --paper: #11161a;
+    --paper-2: #181d20;
+    --rule: #232820;
+    --crimson: #a04030;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Inter Tight", sans-serif;
+    line-height: 1.55;
+  }
+  body { overflow-x: hidden; }
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 30% 25%, rgba(74,128,104,0.04) 0%, transparent 55%),
+      radial-gradient(circle at 75% 75%, rgba(176,133,80,0.03) 0%, transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .mono { font-family: "JetBrains Mono", monospace; }
+
+  header.masthead {
+    padding: 4.5rem 2rem 3rem;
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, #080d0a 0%, var(--bg) 100%);
+    position: relative;
+    overflow: hidden;
+    z-index: 2;
+  }
+  header.masthead::after {
+    content: "¶";
+    position: absolute;
+    right: 3rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: "Crimson Pro", serif;
+    font-size: 16rem;
+    color: rgba(74,128,104,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--bronze);
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow::before {
+    content: "";
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--bronze);
+    vertical-align: middle;
+    margin-right: 0.9rem;
+  }
+  h1.title {
+    font-family: "Crimson Pro", serif;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 7vw, 5.8rem);
+    line-height: 0.96;
+    letter-spacing: 0;
+    max-width: 22ch;
+    position: relative;
+    z-index: 2;
+  }
+  h1.title em { color: var(--bronze); font-style: italic; font-weight: 400; }
+  .subtitle {
+    font-family: "Source Serif 4", serif;
+    font-size: clamp(1.05rem, 1.45vw, 1.35rem);
+    color: var(--ink-dim);
+    margin-top: 1.8rem;
+    max-width: 64ch;
+    font-style: italic;
+    line-height: 1.55;
+    position: relative;
+    z-index: 2;
+  }
+  .byline {
+    margin-top: 2.2rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.06em;
+    position: relative;
+    z-index: 2;
+  }
+  .byline span { color: var(--ink-dim); }
+
+  nav.secs {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(6,10,8,0.95);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0.85rem 2rem;
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+  nav.secs button, .filter-btn, button.action {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--ink-dim);
+    padding: 0.5rem 0.9rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  nav.secs button:hover, .filter-btn:hover, button.action:hover {
+    color: var(--ink);
+    border-color: var(--bronze);
+  }
+  nav.secs button.active, .filter-btn.active {
+    background: var(--bronze);
+    color: var(--bg);
+    border-color: var(--bronze);
+    font-weight: 500;
+  }
+  button.action {
+    color: var(--bronze);
+    border-color: var(--bronze);
+  }
+  button.action:hover { background: var(--bronze); color: var(--bg); }
+
+  section.sec {
+    padding: 6rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    z-index: 2;
+  }
+  section.sec .inner { max-width: 1200px; margin: 0 auto; }
+  .sec-header {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2.5rem;
+    align-items: baseline;
+    margin-bottom: 3rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .sec-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--bronze);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .sec-tag .tag-sub {
+    display: block;
+    color: var(--ink-faded);
+    margin-top: 0.4rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+  }
+  h2.sec-title {
+    font-family: "Crimson Pro", serif;
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4.5vw, 4rem);
+    line-height: 0.98;
+    letter-spacing: 0;
+  }
+  h2.sec-title em { color: var(--bronze); font-style: italic; }
+  .lede {
+    font-family: "Source Serif 4", serif;
+    font-size: 1.3rem;
+    line-height: 1.65;
+    max-width: 68ch;
+    color: var(--ink);
+    margin-bottom: 3rem;
+  }
+  .lede::first-letter {
+    font-family: "Crimson Pro", serif;
+    font-size: 4.4rem;
+    float: left;
+    line-height: 0.88;
+    margin: 0.08em 0.1em 0 0;
+    color: var(--bronze);
+  }
+  .body-prose {
+    font-family: "Source Serif 4", serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    max-width: 70ch;
+    margin-bottom: 2rem;
+  }
+  .body-prose p { margin-bottom: 1.2rem; }
+  .body-prose strong { color: var(--bronze); font-weight: 500; }
+
+  blockquote.pullquote {
+    font-family: "Crimson Pro", serif;
+    font-style: italic;
+    font-size: 1.7rem;
+    line-height: 1.3;
+    color: var(--bronze);
+    border-left: 2px solid var(--bronze);
+    padding: 1.2rem 0 1.2rem 1.8rem;
+    margin: 3rem 0;
+    max-width: 64ch;
+  }
+  blockquote.pullquote cite {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--ink-faded);
+    font-style: normal;
+    font-family: "JetBrains Mono", monospace;
+    margin-top: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  .traditions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin: 2rem 0 3rem;
+  }
+  .trad-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-top: 3px solid;
+    padding: 1.8rem;
+    transition: all 0.25s;
+  }
+  .trad-card:hover { transform: translateY(-2px); }
+  .trad-card.t1 { border-top-color: var(--emerald); }
+  .trad-card.t2 { border-top-color: var(--bronze); }
+  .trad-card.t3 { border-top-color: var(--plum); }
+  .trad-card.t4 { border-top-color: var(--slate); }
+  .trad-card .t-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .t1 .t-num { color: var(--emerald); }
+  .t2 .t-num { color: var(--bronze); }
+  .t3 .t-num { color: var(--plum); }
+  .t4 .t-num { color: var(--slate); }
+  .trad-card h4 {
+    font-family: "Crimson Pro", serif;
+    font-size: 1.6rem;
+    font-weight: 500;
+    line-height: 1.15;
+    margin-bottom: 0.6rem;
+  }
+  .trad-card .t-role {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-dim);
+    margin-bottom: 0.9rem;
+    line-height: 1.5;
+  }
+  .trad-card .t-figures {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--ink-faded);
+    line-height: 1.7;
+    border-top: 1px solid var(--rule);
+    padding-top: 0.9rem;
+    letter-spacing: 0.04em;
+  }
+
+  .interactive {
+    background: #04070a;
+    border: 1px solid var(--rule);
+    margin: 2.5rem 0;
+    overflow: hidden;
+  }
+  .interactive-header {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    background: rgba(17,22,26,0.6);
+  }
+  .interactive-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--emerald-bright);
+  }
+  .interactive-title {
+    font-family: "Crimson Pro", serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+  .interactive-body { padding: 1.8rem; }
+
+  .source-controls {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .source-search {
+    background: #06090c;
+    border: 1px solid var(--rule);
+    color: var(--ink);
+    padding: 0.55rem 0.85rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    width: 240px;
+    margin-left: auto;
+  }
+  .source-search:focus { outline: 1px solid var(--bronze); border-color: var(--bronze); }
+  .source-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .source-list {
+    max-height: 540px;
+    overflow-y: auto;
+    border: 1px solid var(--rule);
+    background: #06090c;
+    scrollbar-width: thin;
+  }
+  .source-item {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 0.7rem;
+    align-items: baseline;
+  }
+  .source-item:hover { background: rgba(176,133,80,0.06); }
+  .source-item.active {
+    background: rgba(176,133,80,0.12);
+    border-left: 3px solid var(--bronze);
+    padding-left: calc(1rem - 3px);
+  }
+  .si-year {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.78rem;
+    color: var(--bronze);
+    font-weight: 600;
+  }
+  .si-author {
+    font-family: "Source Serif 4", serif;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .si-cat {
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.1em;
+    margin-top: 0.2rem;
+  }
+  .source-detail, .concept-detail {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.8rem;
+    min-height: 400px;
+    position: sticky;
+    top: 80px;
+  }
+  .source-detail.empty, .concept-detail.empty, .arg-trace.empty {
+    border: 1px dashed var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--ink-faded);
+    font-style: italic;
+    font-family: "Source Serif 4", serif;
+    padding: 3rem;
+  }
+  .source-detail h4, .concept-detail h4 {
+    font-family: "Crimson Pro", serif;
+    font-size: 1.65rem;
+    font-weight: 500;
+    line-height: 1.15;
+  }
+  .sd-yr, .c-origin {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--bronze);
+    letter-spacing: 0.1em;
+    margin-top: 0.3rem;
+  }
+  .sd-work {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    color: var(--ink-dim);
+    font-size: 1rem;
+    margin: 0.6rem 0 1.2rem;
+  }
+  .sd-tag {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid;
+    margin-bottom: 1rem;
+  }
+  .media-ecology { color: var(--emerald-bright); border-color: var(--emerald-bright); }
+  .learning-science { color: var(--bronze); border-color: var(--bronze); }
+  .critical-equity { color: #b88aa8; border-color: var(--plum); }
+  .ai-context { color: #9eb0c4; border-color: var(--slate); }
+  .sd-label, .c-section-label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-faded);
+    margin: 1rem 0 0.4rem;
+  }
+  .source-detail p, .concept-detail p, .c-def {
+    font-family: "Source Serif 4", serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .sd-quote {
+    background: rgba(176,133,80,0.08);
+    border-left: 2px solid var(--bronze);
+    padding: 0.9rem 1.1rem;
+    margin-top: 1rem;
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 0.98rem;
+    line-height: 1.55;
+  }
+  .sd-quote::before {
+    content: "IN THE PAPER";
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.6rem;
+    font-style: normal;
+    letter-spacing: 0.16em;
+    color: var(--bronze);
+    margin-bottom: 0.4rem;
+  }
+
+  .concept-map-wrap {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .map-svg-box {
+    background: #03060a;
+    border: 1px solid var(--rule);
+    min-height: 720px;
+    overflow: hidden;
+  }
+  .map-svg-box svg { width: 100%; height: 100%; min-height: 720px; display: block; }
+  .map-node circle { transition: all 0.2s; cursor: pointer; }
+  .map-node:hover circle, .map-node.active circle { stroke-width: 3; }
+  .map-node text { pointer-events: none; user-select: none; }
+  .map-edge { transition: all 0.3s; }
+  .map-legend {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+    color: var(--ink-dim);
+    letter-spacing: 0.05em;
+  }
+  .lg-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    vertical-align: middle;
+    margin-right: 0.4rem;
+  }
+  .c-section {
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    margin-top: 1rem;
+  }
+  .c-link {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+    background: rgba(74,128,104,0.1);
+    border: 1px solid var(--emerald);
+    color: var(--emerald-bright);
+    padding: 3px 8px;
+    margin: 3px 4px 3px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 0.05em;
+  }
+  .c-link:hover { background: var(--emerald); color: var(--bg); }
+
+  .arg-claim-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .arg-claim {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.1rem 1.3rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: "Source Serif 4", serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+  .arg-claim:hover, .arg-claim.active {
+    border-color: var(--bronze);
+    background: rgba(176,133,80,0.08);
+  }
+  .ac-num {
+    font-family: "JetBrains Mono", monospace;
+    font-weight: 600;
+    color: var(--bronze);
+    margin-right: 0.7rem;
+    font-size: 0.95rem;
+  }
+  .arg-trace {
+    background: #03060a;
+    border: 1px solid var(--bronze);
+    padding: 2rem;
+    margin-top: 0.5rem;
+  }
+  .arg-trace h4 {
+    font-family: "Crimson Pro", serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  .at-section-loc {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    color: var(--ink-faded);
+    letter-spacing: 0.14em;
+    margin-bottom: 1.2rem;
+  }
+  .at-step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 1rem;
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px dashed var(--rule);
+    align-items: start;
+  }
+  .at-step:first-of-type { border-top: none; padding-top: 0; }
+  .at-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--bronze);
+    line-height: 1;
+    padding-top: 0.1rem;
+  }
+  .at-move {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--emerald-bright);
+    margin-bottom: 0.3rem;
+  }
+  .at-text {
+    font-family: "Source Serif 4", serif;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    margin-bottom: 0.6rem;
+  }
+  .at-cit {
+    display: inline-block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.64rem;
+    background: rgba(74,128,104,0.08);
+    border: 1px solid var(--emerald);
+    color: var(--emerald-bright);
+    padding: 3px 7px;
+    margin: 3px 4px 3px 0;
+    letter-spacing: 0.04em;
+  }
+  .at-cit.qual { border-color: var(--bronze); color: var(--bronze-bright); background: rgba(176,133,80,0.08); }
+  .at-cit.crit { border-color: var(--plum); color: #b88aa8; background: rgba(106,72,104,0.08); }
+
+  .gap-rows { display: grid; gap: 0.5rem; }
+  .gap-row {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    padding: 1.2rem 1.5rem;
+    display: grid;
+    grid-template-columns: 100px 1fr 1.5fr;
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .gr-yr {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.85rem;
+    color: var(--bronze);
+    letter-spacing: 0.05em;
+  }
+  .gr-yr div {
+    font-family: "Source Serif 4", serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink);
+    margin-top: 0.3rem;
+    letter-spacing: 0;
+  }
+  .gr-claim, .gr-gap {
+    font-family: "Source Serif 4", serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+  }
+  .gr-gap {
+    font-style: italic;
+    color: var(--ink-dim);
+    border-left: 2px solid var(--crimson);
+    padding-left: 1rem;
+  }
+  .gr-gap strong { color: var(--ink); font-style: normal; font-weight: 500; }
+
+  .deep-dive {
+    background: linear-gradient(135deg, #131a16 0%, #0a0e0c 100%);
+    border: 1px solid var(--bronze);
+    padding: 2.8rem 2.5rem;
+    margin: 3rem 0;
+    position: relative;
+  }
+  .deep-dive::before {
+    content: "METHODOLOGICAL NOTE";
+    position: absolute;
+    top: -10px;
+    left: 2rem;
+    background: var(--bg);
+    color: var(--bronze);
+    padding: 0 0.8rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.66rem;
+    letter-spacing: 0.24em;
+  }
+  .deep-dive h3 {
+    font-family: "Crimson Pro", serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+  }
+  .deep-dive h3 em { color: var(--bronze); font-style: italic; }
+  .deep-dive-body {
+    font-family: "Source Serif 4", serif;
+    font-size: 1.08rem;
+    line-height: 1.7;
+    max-width: 72ch;
+  }
+  .note {
+    font-family: "Source Serif 4", serif;
+    font-size: 0.98rem;
+    font-style: italic;
+    color: var(--ink-dim);
+    border-left: 2px solid var(--emerald);
+    padding: 0.6rem 1rem;
+    margin: 1rem 0;
+    line-height: 1.55;
+  }
+  .note strong { color: var(--ink); font-style: normal; }
+
+  footer.coda {
+    padding: 5rem 2rem 3rem;
+    text-align: center;
+    background: var(--bg-2);
+    border-top: 1px solid var(--rule);
+    position: relative;
+    z-index: 2;
+  }
+  footer.coda .mark {
+    font-family: "Crimson Pro", serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--bronze);
+    margin-bottom: 1rem;
+    letter-spacing: 0.15em;
+  }
+  footer.coda p {
+    font-family: "Source Serif 4", serif;
+    font-size: 1rem;
+    color: var(--ink-dim);
+    font-style: italic;
+    max-width: 66ch;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  footer.coda .attrib {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    color: var(--bronze);
+    font-style: normal;
+    margin-top: 1.8rem;
+    letter-spacing: 0.08em;
+  }
+
+  @media (max-width: 900px) {
+    .sec-header, .source-grid, .concept-map-wrap { grid-template-columns: 1fr; gap: 0.8rem; }
+    .traditions-grid { grid-template-columns: 1fr; }
+    .source-detail, .concept-detail { position: static; }
+    .gap-row { grid-template-columns: 1fr; gap: 0.6rem; }
+    .gap-row .gr-gap { border-left: none; border-top: 1px dashed var(--rule); padding-left: 0; padding-top: 0.6rem; }
+    .source-search { width: 100%; margin-left: 0; }
+    .map-svg-box, .map-svg-box svg { min-height: 620px; }
+  }
+  @media (max-width: 640px) {
+    header.masthead, section.sec { padding-left: 1rem; padding-right: 1rem; }
+    nav.secs { padding-left: 1rem; padding-right: 1rem; }
+    .interactive-body { padding: 1rem; }
+    .source-item { grid-template-columns: 1fr; }
+    .map-svg-box, .map-svg-box svg { min-height: 560px; }
+  }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="eyebrow">An Interactive Companion · Fourth Artifact in a Suite</div>
+  <h1 class="title">The Literature,<br>Read in <em>Position</em></h1>
+  <p class="subtitle">A guided passage through the sources that ground the qualifying paper, organized not by alphabet or chronology but by the four traditions whose intersection makes the argument possible. Click any source. Trace any claim. Watch how the constructs depend on one another.</p>
+  <div class="byline"><span>Companion to: <em>Beyond Secondary Orality: Tertiary Algorithmicity and the Case for Pedagogical Friction</em>, by Micah J. Miner.</span> &nbsp;·&nbsp; Three interactives. All paper-true.</div>
+</header>
+
+<nav class="secs" id="secNav">
+  <button data-sec="orientation" class="active">I Orientation</button>
+  <button data-sec="four">II Four Traditions</button>
+  <button data-sec="explorer">III Source Explorer</button>
+  <button data-sec="map">IV Concept Map</button>
+  <button data-sec="tracer">V Argument Tracer</button>
+  <button data-sec="gap">VI The Gap</button>
+  <button data-sec="reflexivity">VII Reflexivity</button>
+</nav>
+
+<section class="sec" id="orientation">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">I<span class="tag-sub">How the literature functions</span></div>
+      <h2 class="sec-title">Sources do <em>different work</em>.</h2>
+    </div>
+    <p class="lede">A literature review can be read as a list of credentials, a chronology of contributions, or, most usefully, as a structural account of which sources warrant which claims. This companion organizes the literature by function: diagnostic frame, evaluative standard, equity check, and contemporary AI context.</p>
+    <div class="body-prose">
+      <p>The qualifying paper is unusually transparent about this division. <strong>Ong provides the primary theoretical foundation</strong> because his work explains how communication technologies reshape consciousness, memory, interpretation, and symbolic life. McLuhan and Postman situate Ong within the broader media ecology tradition, while Stiegler provides complementary language for externalized memory and technological mediation.</p>
+      <p>The learning-science sources, especially Kapur, Bjork and Bjork, and Sweller, perform a different function. They do not prove the media-ecological claim; they explain why bypassing interpretive and compositional labor matters educationally. Critical and disability studies sources then keep the framework from mistaking inherited exclusion for productive difficulty.</p>
+    </div>
+    <blockquote class="pullquote">
+      Two intellectual traditions that rarely cite each other, Ong's media ecology and the learning sciences of Kapur, Bjork, and Sweller, are combined to fill a documented gap.
+      <cite>Section VI, the paper's own statement of contribution</cite>
+    </blockquote>
+  </div>
+</section>
+
+<section class="sec" id="four">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">II<span class="tag-sub">The literature by function</span></div>
+      <h2 class="sec-title">Four traditions, <em>distinct roles</em>.</h2>
+    </div>
+    <p class="lede">The paper draws on four scholarly traditions, each performing a structurally different role in the argument. None substitutes for another.</p>
+    <div class="traditions-grid">
+      <div class="trad-card t1">
+        <div class="t-num">Tradition I · Diagnostic frame</div>
+        <h4>Media Ecology &amp; <em>Technics</em></h4>
+        <div class="t-role">Names what is happening to consciousness, authorship, and the symbolic environment under generative AI.</div>
+        <div class="t-figures">ONG · McLUHAN · POSTMAN · STIEGLER · BAUDRILLARD · DRON · PETRICINI · FOLEY</div>
+      </div>
+      <div class="trad-card t2">
+        <div class="t-num">Tradition II · Evaluative standard</div>
+        <h4>Learning <em>Sciences</em></h4>
+        <div class="t-role">Establishes why bypassing cognitive labor matters and why productive struggle is constitutive of durable understanding.</div>
+        <div class="t-figures">DEWEY · PIAGET · VYGOTSKY · KAPUR · BJORK &amp; BJORK · SWELLER · KARPICKE &amp; BLUNT</div>
+      </div>
+      <div class="trad-card t3">
+        <div class="t-num">Tradition III · Equity check</div>
+        <h4>Critical, <em>Disability</em>, &amp; Equity</h4>
+        <div class="t-role">Prevents the framework from reproducing inequity under the guise of rigor by distinguishing productive friction from exclusionary friction.</div>
+        <div class="t-figures">DOLMAGE · ANNAMMA · CONNOR &amp; FERRI · HILL COLLINS · BANG ET AL · BOZKURT</div>
+      </div>
+      <div class="trad-card t4">
+        <div class="t-num">Tradition IV · Documentary context</div>
+        <h4>AI Studies &amp; the <em>Empirical Present</em></h4>
+        <div class="t-role">Documents the technological and institutional conditions that make the conceptual problem urgent for schools.</div>
+        <div class="t-figures">BENDER ET AL · FLORIDI &amp; CHIRIATTI · MOLLICK · DOSS ET AL · JAKESCH · CLARK · JONES · ZUBOFF</div>
+      </div>
+    </div>
+    <div class="note"><strong>A note on overlaps.</strong> Placement reflects the function each source performs in the qualifying paper, not a fixed disciplinary identity.</div>
+  </div>
+</section>
+
+<section class="sec" id="explorer">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">III<span class="tag-sub">First interactive</span></div>
+      <h2 class="sec-title">Every source, <em>in position</em>.</h2>
+    </div>
+    <p class="lede">Click any source to see what it contributes, where in the argument it appears, and the specific work the citation does.</p>
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · Source Explorer</div>
+          <div class="interactive-title">Filter by tradition. Click any source. Read its function.</div>
+        </div>
+      </div>
+      <div class="interactive-body">
+        <div class="source-controls">
+          <button class="filter-btn active" data-filter="all">All <span class="count" id="cnt-all">-</span></button>
+          <button class="filter-btn" data-filter="media-ecology">Media Ecology <span class="count" id="cnt-media-ecology">-</span></button>
+          <button class="filter-btn" data-filter="learning-science">Learning Science <span class="count" id="cnt-learning-science">-</span></button>
+          <button class="filter-btn" data-filter="critical-equity">Critical / Equity <span class="count" id="cnt-critical-equity">-</span></button>
+          <button class="filter-btn" data-filter="ai-context">AI Context <span class="count" id="cnt-ai-context">-</span></button>
+          <input type="text" class="source-search" id="sourceSearch" placeholder="Search author or work">
+        </div>
+        <div class="source-grid">
+          <div class="source-list" id="sourceList"></div>
+          <div class="source-detail empty" id="sourceDetail">Select any source to read what it contributes to the argument.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="map">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">IV<span class="tag-sub">Second interactive</span></div>
+      <h2 class="sec-title">The constructs, in <em>relation</em>.</h2>
+    </div>
+    <p class="lede">The concept map shows how the paper's constructs depend on one another. I corrected the original map viewport so the lower friction nodes now render inside the visible SVG instead of falling below the frame.</p>
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · Concept Map</div>
+          <div class="interactive-title">How the constructs depend on each other</div>
+        </div>
+      </div>
+      <div class="interactive-body">
+        <div class="map-legend">
+          <span><span class="lg-dot" style="background:#4a8068"></span>Diagnostic concept</span>
+          <span><span class="lg-dot" style="background:#b08550"></span>Evaluative concept</span>
+          <span><span class="lg-dot" style="background:#6a4868"></span>Equity concept</span>
+          <span><span class="lg-dot" style="background:#4a5a6a"></span>Original concept</span>
+        </div>
+        <div class="concept-map-wrap">
+          <div class="map-svg-box">
+            <svg id="conceptMapSVG" viewBox="40 50 540 690" preserveAspectRatio="xMidYMid meet"></svg>
+          </div>
+          <div class="concept-detail empty" id="conceptDetail">Select any construct in the map to see its definition, sources, and links.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="tracer">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">V<span class="tag-sub">Third interactive</span></div>
+      <h2 class="sec-title">A claim, traced to <em>warrant</em>.</h2>
+    </div>
+    <p class="lede">Each claim below is load-bearing in the qualifying paper. Selecting one expands the chain of moves and citations that warrant it.</p>
+    <div class="interactive">
+      <div class="interactive-header">
+        <div>
+          <div class="interactive-label">Interactive · Argument Tracer</div>
+          <div class="interactive-title">Five load-bearing claims, traced to source</div>
+        </div>
+      </div>
+      <div class="interactive-body">
+        <div class="arg-claim-row" id="argClaimsRow"></div>
+        <div class="arg-trace empty" id="argTrace">Select any claim above to see the chain of moves and citations that warrant it.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="gap">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">VI<span class="tag-sub">Prior extensions and the persistent gap</span></div>
+      <h2 class="sec-title">What the literature has <em>not yet reached</em>.</h2>
+    </div>
+    <p class="lede">The paper maps seven scholarly proposals for tertiary orality and shows that none addresses the categorical condition introduced by generative AI: symbolic content generated by systems that have never had an experience.</p>
+    <div class="gap-rows">
+      <div class="gap-row"><div class="gr-yr">2009<div>Mayer</div></div><div class="gr-claim">Tertiary orality as interactive networked circulation rather than broadcast logic.</div><div class="gr-gap"><strong>Gap:</strong> Remains within the human-authored frame.</div></div>
+      <div class="gap-row"><div class="gr-yr">2013<div>Turner &amp; Allen</div></div><div class="gr-claim">How literate institutions accommodate oral artifacts like vlogs and oral histories.</div><div class="gr-gap"><strong>Gap:</strong> Human-authored oral artifacts remain the object.</div></div>
+      <div class="gap-row"><div class="gr-yr">2016<div>Angel-Botero &amp; Alvarado-Duque</div></div><div class="gr-claim">Digital radio listeners and features of liveliness, transcoding, and aggressiveness.</div><div class="gr-gap"><strong>Gap:</strong> Voices are assumed human.</div></div>
+      <div class="gap-row"><div class="gr-yr">2020<div>Soffer</div></div><div class="gr-claim">Voice search as oral expression disciplined by anticipated textual processing.</div><div class="gr-gap"><strong>Gap:</strong> The utterance originates in a human speaker.</div></div>
+      <div class="gap-row"><div class="gr-yr">2021<div>Heyd</div></div><div class="gr-claim">Humans now talk to machines, not only through them.</div><div class="gr-gap"><strong>Gap:</strong> The closest prior account, but the generated machine side of the dialogue remains outside the frame.</div></div>
+      <div class="gap-row"><div class="gr-yr">2023<div>Ryu</div></div><div class="gr-claim">Tertiary orality in virtual reality environments.</div><div class="gr-gap"><strong>Gap:</strong> Focus is the environment of exchange, not the origin of speech.</div></div>
+      <div class="gap-row"><div class="gr-yr">2024<div>Cordon-Garcia &amp; Munoz-Rico</div></div><div class="gr-claim">Platform participatory orality on TikTok and YouTube.</div><div class="gr-gap"><strong>Gap:</strong> Algorithmic curation is present; algorithmic generation is not centered.</div></div>
+    </div>
+    <div class="deep-dive">
+      <h3>The axis the paper <em>shifts</em></h3>
+      <p class="deep-dive-body">Tertiary orality extends Ong along the axis of broadcast to interactive/networked communication. Generative AI breaks along a different axis: <strong>human versus algorithmic origination</strong> of symbolic content. The terminological choice, algorithmicity rather than orality, marks the recognition that the oral-literate continuum no longer captures the primary transformation underway.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="reflexivity">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">VII<span class="tag-sub">Closing position</span></div>
+      <h2 class="sec-title">What the literature <em>cannot do</em>.</h2>
+    </div>
+    <p class="lede">A literature review is also an account of its own limits. The framework draws heavily on Ong, whose work emerged from Western, Christian, humanist intellectual traditions; the analysis reflects the technological landscape of 2025-2026; and the focus on preserving cognitive struggle reflects a technoskeptical disposition that other scholars might frame differently.</p>
+    <div class="body-prose">
+      <p>The disability studies critique is the most analytically consequential limit-acknowledgment. The framework commits to friction preservation only after asking who decides which friction is productive, whose cognitive processes count as default, and whose accommodations become classified as bypass rather than access.</p>
+      <p>Reflexivity is also methodological. The author writes as a district Director of Innovation and Technology observing AI use across five school sites. That vantage produces specificity and a blind spot: the framework may undercount ways generative AI creates genuinely new possibilities for learning that do not fit the friction model.</p>
+    </div>
+    <blockquote class="pullquote">
+      The value of this framework lies in its capacity to name what is educationally at stake when the default tendency of a media environment is to eliminate productive struggle.
+      <cite>Section VI.C, the paper's reflexive close</cite>
+    </blockquote>
+  </div>
+</section>
+
+<footer class="coda">
+  <div class="mark">FINIS</div>
+  <p>Fourth artifact in a suite that includes the history of machine intelligence, the pedagogy of friction framework, and the media ecology reading. Together the four pieces span the conceptual architecture of the qualifying paper.</p>
+  <div class="attrib">Micah J. Miner · National Louis University · Curriculum, Advocacy &amp; Policy · 2026</div>
+</footer>
+
+<script>
+const secIds = ["orientation", "four", "explorer", "map", "tracer", "gap", "reflexivity"];
+document.querySelectorAll("#secNav button").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = document.getElementById(btn.dataset.sec);
+    if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.querySelectorAll("#secNav button").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+  });
+});
+const secObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      document.querySelectorAll("#secNav button").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.sec === entry.target.id);
+      });
+    }
+  });
+}, { rootMargin: "-30% 0px -60% 0px" });
+secIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) secObs.observe(el);
+});
+
+const sources = [
+  { id: "ong-1982", author: "Walter Ong", year: "1982/2002", work: "Orality and Literacy: The Technologizing of the Word", cat: "media-ecology", function: "Primary theoretical foundation. Provides the developmental account of how communication technologies restructure consciousness: primary orality, literacy, and secondary orality.", quote: "Ong makes it possible to ask whether new technologies inaugurate new conditions of consciousness by reorganizing memory, authorship, interpretation, and the relationship between language and experience." },
+  { id: "ong-1967", author: "Walter Ong", year: "1967", work: "The Presence of the Word", cat: "media-ecology", function: "Source for the shifting sensorium, the claim that media technologies reorganize how the senses prioritize and process information.", quote: "Algorithmically mediated environments restructure cognitive processing to prioritize high-stimulus, reactive engagement over sustained analysis." },
+  { id: "mcluhan-1964", author: "Marshall McLuhan", year: "1964", work: "Understanding Media", cat: "media-ecology", function: "Situates Ong within the broader media ecology tradition and provides the orientation that media forms shape experience independent of content.", quote: "The medium is not a neutral pipe; it is part of the message's formative environment." },
+  { id: "postman-1985", author: "Neil Postman", year: "1985", work: "Amusing Ourselves to Death", cat: "media-ecology", function: "Establishes that each medium creates its own epistemology: implicit standards for truth, argument, and evidence.", quote: "Postman helps the paper ask what epistemology generative AI invites." },
+  { id: "stiegler-2010", author: "Bernard Stiegler", year: "2010", work: "Technics and Time, 3", cat: "media-ecology", function: "Provides tertiary retention as technical memory, sharpened by the paper's claim that generative AI produces retention-like outputs without experience behind them.", quote: "The retention retains nothing that was ever present to consciousness." },
+  { id: "baudrillard-1994", author: "Jean Baudrillard", year: "1981/1994", work: "Simulacra and Simulation", cat: "media-ecology", function: "Provides a diagnostic parallel for symbolic forms detaching from referential grounding, while the paper refuses Baudrillard's totalizing prognosis.", quote: "Useful as diagnosis, not as an educational endpoint." },
+  { id: "dewey-1933", author: "John Dewey", year: "1933", work: "How We Think", cat: "learning-science", function: "Foundational warrant for the claim that reflective thought requires a problematic situation.", quote: "The problematic situation cannot be bypassed without bypassing the thinking it generates." },
+  { id: "piaget-1952", author: "Jean Piaget", year: "1952", work: "The Origins of Intelligence in Children", cat: "learning-science", function: "Identifies accommodation as a mechanism of cognitive growth when existing schemas fail.", quote: "Schema construction requires more than receiving an answer." },
+  { id: "vygotsky-1978", author: "Lev Vygotsky", year: "1978", work: "Mind in Society", cat: "learning-science", function: "Locates learning in the zone between independent ability and not-yet-possible achievement.", quote: "Scaffolding must support the learner's cognitive effort, not replace it." },
+  { id: "kapur-2008", author: "Manu Kapur", year: "2008", work: "Productive Failure", cat: "learning-science", function: "Demonstrates that struggle before instruction can strengthen transfer by activating prior knowledge and exposing gaps.", quote: "Failure can prepare learning when it is structured productively." },
+  { id: "kapur-2016", author: "Manu Kapur", year: "2016", work: "Productive Failure, Productive Success, Unproductive Failure, and Unproductive Success", cat: "learning-science", function: "The most directly relevant source: names unproductive success, correct performance without underlying understanding.", quote: "This fourth quadrant names the educational threat of tertiary algorithmicity." },
+  { id: "bjork-2011", author: "Bjork & Bjork", year: "2011", work: "Making Things Hard on Yourself, But in a Good Way", cat: "learning-science", function: "Provides desirable difficulties, conditions that slow initial performance while strengthening retention and transfer.", quote: "Some difficulty is a mechanism of learning rather than an obstacle to it." },
+  { id: "sweller-2011", author: "Sweller, Ayres & Kalyuga", year: "2011", work: "Cognitive Load Theory", cat: "learning-science", function: "Provides the distinction between extraneous load and germane load, making the friction framework analytically precise.", quote: "AI can reduce extraneous load defensibly, but reducing germane load can bypass schema construction." },
+  { id: "dolmage-2017", author: "Jay Dolmage", year: "2017", work: "Academic Ableism", cat: "critical-equity", function: "Prevents rigor from becoming a euphemism for exclusion. Forces any call to preserve difficulty to ask who benefits and who is blocked.", quote: "Difficulty can build capacity, but it can also function as gatekeeping." },
+  { id: "annamma-2013", author: "Annamma, Connor & Ferri", year: "2013", work: "Dis/ability Critical Race Studies", cat: "critical-equity", function: "Shows how race and disability intersect in educational categorization.", quote: "What counts as productive struggle for one student may be documented as deficit for another." },
+  { id: "hill-collins-2000", author: "Patricia Hill Collins", year: "2000", work: "Black Feminist Thought", cat: "critical-equity", function: "Provides the standpoint-epistemology argument that rigor and support look different depending on one's position in relation to power.", quote: "The productive/exclusionary distinction must be situated." },
+  { id: "bang-2016", author: "Bang et al.", year: "2016", work: "Community-Based Design Research and Axiological Innovation", cat: "critical-equity", function: "Pushes pedagogical friction beyond teacher technique toward collective redesign of values and evaluation criteria.", quote: "The framework requires axiological innovation, not just assignment redesign." },
+  { id: "bender-2021", author: "Bender, Gebru, McMillan-Major & Shmitchell", year: "2021", work: "On the Dangers of Stochastic Parrots", cat: "ai-context", function: "Technical anchor for the claim that large language models probabilistically sequence tokens without semantic grounding or communicative intent.", quote: "Fluent output is not the same as grounded communication." },
+  { id: "floridi-2020", author: "Floridi & Chiriatti", year: "2020", work: "GPT-3: Its Nature, Scope, Limits, and Consequences", cat: "ai-context", function: "Companion technical anchor to Bender et al.; supports the claim that GPT-class systems produce statistically plausible responses rather than grounded communication.", quote: "The system simulates communication without being situated as a communicator." },
+  { id: "mollick-2024", author: "Ethan Mollick", year: "2024", work: "Co-Intelligence", cat: "ai-context", function: "Documents that AI use in academic work is widespread and largely undetected, making the conceptual analysis urgent for schools.", quote: "The practical question is not whether students use these tools, but what follows from that use." },
+  { id: "doss-2025", author: "Doss et al.", year: "2025", work: "AI Use in Schools (RAND)", cat: "ai-context", function: "Empirical anchor for the claim that AI use in K-12 has outpaced institutional guidance.", quote: "Institutional response lags behind actual adoption." },
+  { id: "jakesch-2023", author: "Jakesch, Hancock & Naaman", year: "2023", work: "Human Heuristics for AI-Generated Language Are Flawed", cat: "ai-context", function: "Empirical evidence that humans struggle to distinguish AI-generated text from human writing.", quote: "Origin uncertainty is now a condition of rhetorical life." },
+  { id: "zuboff-2019", author: "Shoshana Zuboff", year: "2019", work: "The Age of Surveillance Capitalism", cat: "ai-context", function: "Supports the critique of feedback loops between user behavior and algorithmic ranking.", quote: "The distribution environment serves prediction and capture, not development." }
+];
+
+let activeFilter = "all";
+let activeSource = null;
+const sourceList = document.getElementById("sourceList");
+const sourceDetail = document.getElementById("sourceDetail");
+const sourceSearch = document.getElementById("sourceSearch");
+
+function formatCat(cat) {
+  return {
+    "media-ecology": "Media Ecology",
+    "learning-science": "Learning Science",
+    "critical-equity": "Critical / Equity",
+    "ai-context": "AI Context"
+  }[cat] || cat;
+}
+function renderSourceList() {
+  const term = sourceSearch.value.trim().toLowerCase();
+  const filtered = sources
+    .filter(s => (activeFilter === "all" || s.cat === activeFilter) && (!term || `${s.author} ${s.work}`.toLowerCase().includes(term)))
+    .sort((a, b) => parseInt(a.year, 10) - parseInt(b.year, 10));
+  sourceList.innerHTML = filtered.length ? "" : '<div style="padding:2rem;text-align:center;color:var(--ink-faded);font-family:Source Serif 4,serif;font-style:italic">No sources match.</div>';
+  filtered.forEach(s => {
+    const el = document.createElement("div");
+    el.className = `source-item${activeSource === s.id ? " active" : ""}`;
+    el.innerHTML = `<div class="si-year">${s.year}</div><div class="si-author">${s.author}<span class="si-cat">${formatCat(s.cat)}</span></div>`;
+    el.addEventListener("click", () => renderSourceDetail(s.id));
+    sourceList.appendChild(el);
+  });
+}
+function renderSourceDetail(id) {
+  activeSource = id;
+  const s = sources.find(item => item.id === id);
+  if (!s) return;
+  sourceDetail.classList.remove("empty");
+  sourceDetail.innerHTML = `
+    <h4>${s.author}</h4>
+    <div class="sd-yr">${s.year}</div>
+    <div class="sd-work">${s.work}</div>
+    <div class="sd-tag ${s.cat}">${formatCat(s.cat)}</div>
+    <div class="sd-label">Function in the argument</div>
+    <p>${s.function}</p>
+    <div class="sd-quote">${s.quote}</div>
+  `;
+  renderSourceList();
+}
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    activeFilter = btn.dataset.filter;
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.toggle("active", b === btn));
+    renderSourceList();
+  });
+});
+sourceSearch.addEventListener("input", renderSourceList);
+["all", "media-ecology", "learning-science", "critical-equity", "ai-context"].forEach(cat => {
+  const count = cat === "all" ? sources.length : sources.filter(s => s.cat === cat).length;
+  document.getElementById(`cnt-${cat}`).textContent = count;
+});
+renderSourceList();
+
+const concepts = [
+  { id: "primary-orality", label: "Primary Orality", short: "PRIMARY", x: 100, y: 100, kind: "diagnostic", origin: "Ong (1982/2002)", def: "The communicative ecology of cultures without writing.", sources: ["Ong (1982/2002)", "Ong (1967)"], role: "Stage 1 in Ong's developmental sequence.", links: ["literacy"] },
+  { id: "literacy", label: "Literacy", short: "LITERACY", x: 250, y: 100, kind: "diagnostic", origin: "Ong (1982/2002)", def: "The internalization of writing externalizes memory and enables analytical detachment.", sources: ["Ong (1982/2002)", "Ong (1977)"], role: "Stage 2. Knowledge becomes objectified in texts that exist independently of any knower.", links: ["primary-orality", "secondary-orality"] },
+  { id: "secondary-orality", label: "Secondary Orality", short: "SECONDARY", x: 400, y: 100, kind: "diagnostic", origin: "Ong (1982/2002)", def: "Electronic broadcast retrieves characteristics of oral culture within a literate framework.", sources: ["Ong (1982/2002)", "Postman (1985)"], role: "Stage 3. The starting point from which the paper extends.", links: ["literacy", "algorithmic-secondary-orality"] },
+  { id: "algorithmic-secondary-orality", label: "Algorithmic Secondary Orality", short: "ALGO-2", x: 500, y: 220, kind: "original", origin: "Proposed in this paper", def: "The transitional condition in which humans create symbolic content but algorithms determine what reaches which consciousness.", sources: ["Bucher (2018)", "van Dijck (2013)", "Zuboff (2019)"], role: "Bridge stage. The feed replaces the schedule.", links: ["secondary-orality", "tertiary-algorithmicity", "shifting-sensorium"] },
+  { id: "tertiary-algorithmicity", label: "Tertiary Algorithmicity", short: "TERTIARY", x: 350, y: 320, kind: "original", origin: "Proposed in this paper", def: "The condition in which algorithmic systems both generate and curate symbolic content, rendering human authorship optional at scale.", sources: ["Bender et al. (2021)", "Floridi & Chiriatti (2020)", "Dron (2023)", "Stiegler (2010)"], role: "The central diagnostic concept.", links: ["algorithmic-secondary-orality", "noetic-displacement", "rhetorical-saturation", "existential-abstraction", "tertiary-retention"] },
+  { id: "tertiary-retention", label: "Tertiary Retention", short: "RETENTION", x: 100, y: 320, kind: "diagnostic", origin: "Stiegler (2010)", def: "Externalized technical memory that forms a third layer alongside immediate experience and recollection.", sources: ["Stiegler (2010)"], role: "Sharpens why algorithmic generation differs from prior externalized memory.", links: ["tertiary-algorithmicity"] },
+  { id: "shifting-sensorium", label: "Shifting Sensorium", short: "SENSORIUM", x: 100, y: 220, kind: "diagnostic", origin: "Ong (1967)", def: "Media technologies reorganize how the senses prioritize and process information.", sources: ["Ong (1967)", "Carr (2011)", "Wolf (2018)"], role: "Used in the analysis of attention.", links: ["algorithmic-secondary-orality", "tertiary-algorithmicity"] },
+  { id: "noetic-displacement", label: "Noetic Displacement", short: "NOETIC", x: 200, y: 420, kind: "original", origin: "Proposed in this paper", def: "The externalization of cognitive labor moves from storage to generation.", sources: ["Ong (1982/2002)", "Stiegler (2010)", "Bozkurt (2025)"], role: "First defining characteristic of tertiary algorithmicity.", links: ["tertiary-algorithmicity", "unproductive-success", "germane-load"] },
+  { id: "rhetorical-saturation", label: "Rhetorical Saturation", short: "RHETORICAL", x: 350, y: 440, kind: "original", origin: "Proposed in this paper", def: "Algorithmic systems produce discourse at scale that becomes increasingly difficult to distinguish from human production.", sources: ["Jakesch et al. (2023)", "Jones et al. (2024)"], role: "Second defining characteristic.", links: ["tertiary-algorithmicity", "rhetorical-friction"] },
+  { id: "existential-abstraction", label: "Existential Abstraction", short: "EXISTENTIAL", x: 500, y: 420, kind: "original", origin: "Proposed in this paper", def: "The severance of symbolic production from lived experience, situated perspective, and material consequence.", sources: ["Bender & Koller (2020)", "Frankfurt (2005)", "Bozkurt (2024)"], role: "Third defining characteristic.", links: ["tertiary-algorithmicity", "existential-friction"] },
+  { id: "unproductive-success", label: "Unproductive Success", short: "UNPRODUCTIVE", x: 200, y: 540, kind: "evaluative", origin: "Kapur (2016)", def: "Correct academic performance without cognitive struggle sufficient for durable understanding.", sources: ["Kapur (2016)", "Kapur (2008)"], role: "The central educational threat.", links: ["noetic-displacement", "germane-load", "productive-friction"] },
+  { id: "germane-load", label: "Germane Load", short: "GERMANE", x: 400, y: 540, kind: "evaluative", origin: "Sweller, Ayres & Kalyuga (2011)", def: "Cognitive effort directed toward schema construction.", sources: ["Sweller et al. (2011)", "Bjork & Bjork (2011)"], role: "Distinguishes helpful load reduction from learning bypass.", links: ["unproductive-success", "noetic-friction", "productive-friction"] },
+  { id: "productive-friction", label: "Productive vs Exclusionary Friction", short: "PROD/EXCL", x: 100, y: 600, kind: "equity", origin: "Proposed; informed by Dolmage and DisCrit", def: "Productive friction builds capacity; exclusionary friction blocks access without building capacity.", sources: ["Dolmage (2017)", "Annamma et al. (2013)", "Hill Collins (2000)"], role: "The framework's equity hinge.", links: ["pedagogical-friction", "unproductive-success"] },
+  { id: "pedagogical-friction", label: "Pedagogical Friction", short: "FRICTION", x: 325, y: 600, kind: "original", origin: "Central construct of the paper", def: "The intentional preservation of cognitive, rhetorical, and existential resistance necessary for durable learning under conditions of frictionless automation.", sources: ["Synthesis of all four traditions"], role: "The central response framework.", links: ["noetic-friction", "rhetorical-friction", "existential-friction", "infrastructural-friction", "productive-friction", "tertiary-algorithmicity"] },
+  { id: "noetic-friction", label: "Noetic Friction", short: "NOETIC FX", x: 100, y: 700, kind: "evaluative", origin: "Proposed", def: "The internal cognitive resistance required to transform external information into internalized understanding.", sources: ["Sweller (2011)", "Bjork & Bjork (2011)", "Kapur (2016)"], role: "First dimension of pedagogical friction.", links: ["pedagogical-friction", "germane-load"] },
+  { id: "rhetorical-friction", label: "Rhetorical Friction", short: "RHET FX", x: 250, y: 700, kind: "evaluative", origin: "Proposed", def: "The dialogic struggle of articulating and revising claims against unpredictable human interlocutors.", sources: ["Ong (1982/2002)", "Turkle (2011)"], role: "Second dimension of pedagogical friction.", links: ["pedagogical-friction", "rhetorical-saturation"] },
+  { id: "existential-friction", label: "Existential Friction", short: "EXIST FX", x: 400, y: 700, kind: "evaluative", origin: "Proposed", def: "The experience of being personally accountable for claims made in shared space.", sources: ["Ong (1982/2002)", "Bozkurt (2024)"], role: "Third dimension of pedagogical friction.", links: ["pedagogical-friction", "existential-abstraction"] },
+  { id: "infrastructural-friction", label: "Infrastructural Friction", short: "INFRA FX", x: 550, y: 700, kind: "evaluative", origin: "Proposed", def: "The structural and policy conditions that make the other friction dimensions possible or impossible to sustain.", sources: ["Kittler (1990)", "Doss et al. (2025)"], role: "The condition of possibility for the framework at scale.", links: ["pedagogical-friction"] }
+];
+
+function colorForKind(kind) {
+  return { diagnostic: "#4a8068", evaluative: "#b08550", equity: "#6a4868", original: "#4a5a6a" }[kind] || "#94927e";
+}
+const cmSVG = document.getElementById("conceptMapSVG");
+function renderConceptMap(activeId) {
+  let html = '<rect x="40" y="50" width="540" height="690" fill="#03060a"/>';
+  const edgeSet = new Set();
+  concepts.forEach(c => {
+    (c.links || []).forEach(targetId => {
+      const key = [c.id, targetId].sort().join("|");
+      if (edgeSet.has(key)) return;
+      edgeSet.add(key);
+      const t = concepts.find(item => item.id === targetId);
+      if (!t) return;
+      const isActive = activeId === c.id || activeId === targetId;
+      html += `<line class="map-edge" x1="${c.x}" y1="${c.y}" x2="${t.x}" y2="${t.y}" stroke="${isActive ? "#b08550" : "#1f2820"}" stroke-width="${isActive ? 1.6 : 0.7}" opacity="${isActive ? 0.85 : 0.55}"/>`;
+    });
+  });
+  concepts.forEach(c => {
+    const isActive = activeId === c.id;
+    const color = colorForKind(c.kind);
+    html += `<g class="map-node ${isActive ? "active" : ""}" data-id="${c.id}">
+      <circle cx="${c.x}" cy="${c.y}" r="${isActive ? 14 : 11}" fill="#06090c" stroke="${color}" stroke-width="${isActive ? 3 : 1.8}"/>
+      <text x="${c.x}" y="${c.y + 26}" fill="${isActive ? color : "#94927e"}" font-family="JetBrains Mono" font-size="8.5" text-anchor="middle">${c.short}</text>
+    </g>`;
+  });
+  cmSVG.innerHTML = html;
+  cmSVG.querySelectorAll(".map-node").forEach(node => {
+    node.addEventListener("click", () => {
+      renderConceptMap(node.dataset.id);
+      renderConceptDetail(node.dataset.id);
+    });
+  });
+}
+function renderConceptDetail(id) {
+  const c = concepts.find(item => item.id === id);
+  if (!c) return;
+  const detail = document.getElementById("conceptDetail");
+  const links = (c.links || []).map(linkId => {
+    const linked = concepts.find(item => item.id === linkId);
+    return linked ? `<span class="c-link" data-id="${linkId}">${linked.label}</span>` : "";
+  }).join("");
+  detail.classList.remove("empty");
+  detail.innerHTML = `
+    <h4>${c.label}</h4>
+    <div class="c-origin" style="color:${colorForKind(c.kind)}">${c.origin}</div>
+    <div class="c-def">${c.def}</div>
+    <div class="c-section"><div class="c-section-label">Role in the argument</div><p>${c.role}</p></div>
+    <div class="c-section"><div class="c-section-label">Sources warranting the construct</div><p>${c.sources.join(" · ")}</p></div>
+    ${links ? `<div class="c-section"><div class="c-section-label">Connects to</div>${links}</div>` : ""}
+  `;
+  detail.querySelectorAll(".c-link").forEach(link => {
+    link.addEventListener("click", () => {
+      renderConceptMap(link.dataset.id);
+      renderConceptDetail(link.dataset.id);
+    });
+  });
+}
+renderConceptMap(null);
+
+const claims = [
+  { id: "c1", text: "Generative AI represents a categorical rupture in the relation between consciousness and the symbolic environment, requiring a new media-ecological stage rather than an intensification of secondary orality.", sectionLoc: "Section II.D - Section III.B", title: "The categorical-rupture claim", steps: [
+    { move: "Establish Ong's framework", text: "The argument identifies three assumptions in secondary orality: human authorship, transparent distribution, and media as an external environment.", cits: [["Ong (1982/2002)", ""], ["Ong (2017)", ""]] },
+    { move: "Show prior proposals retain those assumptions", text: "Prior tertiary-orality proposals extend Ong along the broadcast-to-interactive axis while retaining human authorship.", cits: [["Mayer (2009)", ""], ["Heyd (2021)", ""], ["Soffer (2020)", ""]] },
+    { move: "Document the technical break", text: "Large language models produce fluent language without semantic grounding or communicative intent.", cits: [["Bender et al. (2021)", "qual"], ["Floridi & Chiriatti (2020)", "qual"]] },
+    { move: "Name the resulting condition", text: "Tertiary algorithmicity names the condition in which algorithmic origination becomes a structural feature of the symbolic environment.", cits: [["Original synthesis", ""]] }
+  ] },
+  { id: "c2", text: "Tertiary algorithmicity makes Kapur's concept of unproductive success a structural condition rather than an individual student behavior.", sectionLoc: "Section IV.A - Section IV.B", title: "The unproductive-success structural claim", steps: [
+    { move: "Establish that learning requires effort", text: "Constructivist and learning-science sources show that cognitive struggle is part of durable understanding.", cits: [["Dewey (1933)", "qual"], ["Piaget (1952)", "qual"], ["Vygotsky (1978)", "qual"]] },
+    { move: "Name the inverse risk", text: "Kapur's unproductive success names correct performance without underlying understanding.", cits: [["Kapur (2016)", "qual"]] },
+    { move: "Identify the structural shift", text: "Generative AI makes correct-looking output the path of least resistance.", cits: [["Mollick (2024)", "qual"], ["Doss et al. (2025)", "qual"]] }
+  ] },
+  { id: "c3", text: "The pedagogical friction framework must distinguish productive friction from exclusionary friction, or it reproduces the inequities it claims to address.", sectionLoc: "Section V.C - Section V.D", title: "The equity-distinction claim", steps: [
+    { move: "Anticipate disability studies critique", text: "Dolmage shows that academic rigor has historically functioned as gatekeeping.", cits: [["Dolmage (2017)", "crit"]] },
+    { move: "Add intersectional analysis", text: "DisCrit shows that race and disability intersect in educational categorization.", cits: [["Annamma, Connor & Ferri (2013)", "crit"]] },
+    { move: "Develop the operational distinction", text: "Productive friction builds capacity; exclusionary friction blocks access without building capacity.", cits: [["Hill Collins (2000)", "crit"], ["Bang et al. (2016)", "crit"]] }
+  ] },
+  { id: "c4", text: "The argument must combine media ecology and learning science because neither tradition alone can capture the educational problem.", sectionLoc: "Section I - Section VI.A", title: "The two-tradition synthesis claim", steps: [
+    { move: "Name what media ecology can do", text: "Media ecology diagnoses the structural transformation of the symbolic environment.", cits: [["Ong (1982/2002)", ""], ["McLuhan (1964)", ""], ["Postman (1985)", ""]] },
+    { move: "Name what learning science can do", text: "Learning science explains why bypassing cognitive labor matters educationally.", cits: [["Kapur (2016)", "qual"], ["Bjork & Bjork (2011)", "qual"], ["Sweller (2011)", "qual"]] },
+    { move: "Identify the synthesis", text: "Tertiary algorithmicity names the condition; pedagogical friction names the response; equity sources keep the response from becoming gatekeeping.", cits: [["Original synthesis", ""]] }
+  ] },
+  { id: "c5", text: "Tertiary algorithmicity is distinct from prior tertiary-orality proposals because the axis it shifts is human vs. algorithmic origination, not broadcast vs. interactive distribution.", sectionLoc: "Section II.C - Section III.B", title: "The axis-shift claim", steps: [
+    { move: "Acknowledge prior tradition", text: "Prior accounts identify real features of the digital environment, especially interactivity and human-machine dialogue.", cits: [["Mayer (2009)", ""], ["Heyd (2021)", ""], ["Ryu (2023)", ""]] },
+    { move: "Identify the persistent assumption", text: "Across these accounts, symbolic content remains fundamentally human in origin.", cits: [["Cordón-García & Muñoz-Rico (2024)", ""]] },
+    { move: "Reorient the axis", text: "The decisive distinction is now between human and algorithmic origination of symbolic content.", cits: [["Bender et al. (2021)", "qual"], ["Dron (2023)", "qual"]] }
+  ] }
+];
+const argClaimsRow = document.getElementById("argClaimsRow");
+const argTrace = document.getElementById("argTrace");
+claims.forEach((claim, index) => {
+  const el = document.createElement("div");
+  el.className = "arg-claim";
+  el.innerHTML = `<span class="ac-num">CLAIM ${index + 1}.</span>${claim.text}`;
+  el.addEventListener("click", () => renderTrace(claim.id));
+  argClaimsRow.appendChild(el);
+});
+function renderTrace(id) {
+  const claim = claims.find(item => item.id === id);
+  if (!claim) return;
+  document.querySelectorAll(".arg-claim").forEach((el, index) => el.classList.toggle("active", claims[index].id === id));
+  argTrace.classList.remove("empty");
+  argTrace.innerHTML = `
+    <h4>${claim.title}</h4>
+    <div class="at-section-loc">${claim.sectionLoc}</div>
+    ${claim.steps.map((step, index) => `
+      <div class="at-step">
+        <div class="at-num">${String(index + 1).padStart(2, "0")}</div>
+        <div>
+          <div class="at-move">${step.move}</div>
+          <div class="at-text">${step.text}</div>
+          <div>${step.cits.map(cit => `<span class="at-cit ${cit[1]}">${cit[0]}</span>`).join("")}</div>
+        </div>
+      </div>
+    `).join("")}
+  `;
+}
+</script>
+</body>
+</html>
