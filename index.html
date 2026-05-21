@@ -120,6 +120,42 @@
     z-index: 2;
   }
   .byline span { color: var(--ink-dim); }
+  .mast-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .route-link, .route-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    border: 1px solid var(--rule);
+    background: rgba(17,22,26,0.76);
+    color: var(--ink-dim);
+    padding: 0.62rem 0.9rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .route-link:hover, .route-button:hover, .route-button.active {
+    border-color: var(--bronze);
+    color: var(--ink);
+    background: rgba(176,133,80,0.1);
+  }
+  .route-link.primary {
+    background: var(--bronze);
+    border-color: var(--bronze);
+    color: var(--bg);
+    font-weight: 600;
+  }
 
   nav.secs {
     position: sticky;
@@ -162,6 +198,56 @@
     border-color: var(--bronze);
   }
   button.action:hover { background: var(--bronze); color: var(--bg); }
+
+  .source-route {
+    padding: 3rem 2rem;
+    border-bottom: 1px solid var(--rule);
+    background: linear-gradient(180deg, rgba(10,17,13,0.96), rgba(6,10,8,0.98));
+    position: relative;
+    z-index: 2;
+  }
+  .source-route-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: 1rem;
+  }
+  .route-panel {
+    border: 1px solid var(--rule);
+    background: rgba(17,22,26,0.78);
+    padding: 1.2rem;
+  }
+  .route-panel h2, .route-panel h3 {
+    margin-bottom: 0.75rem;
+    color: var(--bronze);
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .route-panel p {
+    color: var(--ink-dim);
+    font-family: "Source Serif 4", serif;
+    font-size: 1.06rem;
+    line-height: 1.62;
+  }
+  .route-buttons, .route-jumps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+  .route-jumps a {
+    border: 1px solid rgba(107,165,136,0.42);
+    color: var(--emerald-bright);
+    padding: 0.42rem 0.65rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
 
   section.sec {
     padding: 6rem 2rem;
@@ -753,7 +839,7 @@
   }
 
   @media (max-width: 900px) {
-    .sec-header, .source-grid, .concept-map-wrap { grid-template-columns: 1fr; gap: 0.8rem; }
+    .sec-header, .source-grid, .concept-map-wrap, .source-route-inner { grid-template-columns: 1fr; gap: 0.8rem; }
     .traditions-grid { grid-template-columns: 1fr; }
     .source-detail, .concept-detail { position: static; }
     .gap-row { grid-template-columns: 1fr; gap: 0.6rem; }
@@ -775,6 +861,10 @@
   <div class="eyebrow">An Interactive Companion · Fourth Artifact in a Suite</div>
   <h1 class="title">The Literature,<br>Read in <em>Position</em></h1>
   <p class="subtitle">A guided passage through the sources that ground the qualifying paper, organized not by alphabet or chronology but by the four traditions whose intersection makes the argument possible. Click any source. Trace any claim. Watch how the constructs depend on one another.</p>
+  <div class="mast-actions">
+    <a class="route-link primary" href="#source-route">Choose a source route</a>
+    <a class="route-link" href="https://minerclass.github.io/dissertationquestionsbeta/dissertation-sites/">Back to dissertation sites</a>
+  </div>
   <div class="byline"><span>Companion to: <em>Beyond Secondary Orality: Tertiary Algorithmicity and the Case for Pedagogical Friction</em>, by Micah J. Miner.</span> &nbsp;·&nbsp; Three interactives. All paper-true.</div>
 </header>
 
@@ -787,6 +877,21 @@
   <button data-sec="gap">VI The Gap</button>
   <button data-sec="reflexivity">VII Reflexivity</button>
 </nav>
+
+<section class="source-route" id="source-route" aria-label="Reader routes through the literature review">
+  <div class="source-route-inner">
+    <div class="route-panel">
+      <h2>Source route</h2>
+      <p>Use this companion to read the literature by function: traditions, constructs, claims, or gaps. Each route foregrounds a different kind of committee question.</p>
+      <div class="route-buttons" id="routeButtons"></div>
+    </div>
+    <div class="route-panel" aria-live="polite">
+      <h3 id="routeTitle">Committee source check</h3>
+      <p id="routeSummary">Start with the orientation, then use the source explorer and argument tracer to see which sources warrant which claims.</p>
+      <div class="route-jumps" id="routeJumps"></div>
+    </div>
+  </div>
+</section>
 
 <section class="sec" id="orientation">
   <div class="inner">
@@ -977,6 +1082,59 @@
 </footer>
 
 <script>
+const sourceRoutes = [
+  {
+    key: "committee",
+    label: "Committee source check",
+    title: "Committee source check",
+    summary: "Start with the orientation, then use the source explorer and argument tracer to see which sources warrant which claims.",
+    sections: ["orientation", "explorer", "tracer"]
+  },
+  {
+    key: "traditions",
+    label: "Read by tradition",
+    title: "Read by tradition",
+    summary: "Move from the four traditions into the source explorer so the reader sees each source by the role it plays.",
+    sections: ["four", "explorer", "reflexivity"]
+  },
+  {
+    key: "constructs",
+    label: "Read by construct",
+    title: "Read by construct",
+    summary: "Use the concept map to inspect how the constructs depend on one another, then trace the claims those constructs support.",
+    sections: ["map", "tracer", "gap"]
+  },
+  {
+    key: "gap",
+    label: "Find the gap",
+    title: "Find the gap",
+    summary: "Focus on what prior tertiary-orality literature reaches, where it stops, and why tertiary algorithmicity names a different axis.",
+    sections: ["gap", "tracer", "reflexivity"]
+  }
+];
+const routeButtons = document.getElementById("routeButtons");
+const routeTitle = document.getElementById("routeTitle");
+const routeSummary = document.getElementById("routeSummary");
+const routeJumps = document.getElementById("routeJumps");
+function sectionLabel(id) {
+  const button = document.querySelector(`#secNav button[data-sec="${id}"]`);
+  return button ? button.textContent.trim() : id;
+}
+function renderSourceRoute(key = "committee") {
+  const route = sourceRoutes.find(item => item.key === key) || sourceRoutes[0];
+  routeTitle.textContent = route.title;
+  routeSummary.textContent = route.summary;
+  routeButtons.querySelectorAll("[data-route]").forEach(button => button.classList.toggle("active", button.dataset.route === route.key));
+  routeJumps.innerHTML = route.sections.map(id => `<a href="#${id}">${sectionLabel(id)}</a>`).join("");
+}
+routeButtons.innerHTML = sourceRoutes.map(route => `<button class="route-button ${route.key === "committee" ? "active" : ""}" type="button" data-route="${route.key}">${route.label}</button>`).join("");
+routeButtons.addEventListener("click", event => {
+  const button = event.target.closest("[data-route]");
+  if (!button) return;
+  renderSourceRoute(button.dataset.route);
+});
+renderSourceRoute();
+
 const secIds = ["orientation", "four", "explorer", "map", "tracer", "gap", "reflexivity"];
 document.querySelectorAll("#secNav button").forEach(btn => {
   btn.addEventListener("click", () => {
