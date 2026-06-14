@@ -863,6 +863,7 @@
   <p class="subtitle">A guided passage through the sources that ground the qualifying paper, organized not by alphabet or chronology but by the four traditions whose intersection makes the argument possible. Click any source. Trace any claim. Watch how the constructs depend on one another.</p>
   <div class="mast-actions">
     <a class="route-link primary" href="#source-route">Choose a source route</a>
+    <a class="route-link" href="#design">Applied case design</a>
     <a class="route-link" href="https://minerclass.github.io/dissertationquestionsbeta/dissertation-sites/">Back to dissertation sites</a>
   </div>
   <div class="byline"><span>Companion to: <em>Beyond Secondary Orality: Tertiary Algorithmicity and the Case for Pedagogical Friction</em>, by Micah J. Miner.</span> &nbsp;·&nbsp; Three interactives. All paper-true.</div>
@@ -876,6 +877,7 @@
   <button data-sec="tracer">V Argument Tracer</button>
   <button data-sec="gap">VI The Gap</button>
   <button data-sec="reflexivity">VII Reflexivity</button>
+  <button data-sec="design">VIII Applied Design</button>
 </nav>
 
 <section class="source-route" id="source-route" aria-label="Reader routes through the literature review">
@@ -1066,12 +1068,39 @@
     <p class="lede">A literature review is also an account of its own limits. The framework draws heavily on Ong, whose work emerged from Western, Christian, humanist intellectual traditions; the analysis reflects the technological landscape of 2025-2026; and the focus on preserving cognitive struggle reflects a technoskeptical disposition that other scholars might frame differently.</p>
     <div class="body-prose">
       <p>The disability studies critique is the most analytically consequential limit-acknowledgment. The framework commits to friction preservation only after asking who decides which friction is productive, whose cognitive processes count as default, and whose accommodations become classified as bypass rather than access.</p>
-      <p>Reflexivity is also methodological. The author writes as a district Director of Innovation and Technology observing AI use across five school sites. That vantage produces specificity and a blind spot: the framework may undercount ways generative AI creates genuinely new possibilities for learning that do not fit the friction model.</p>
+      <p>Reflexivity is also methodological. The author writes as a district Director of Innovation and Technology observing AI use across five school sites. That vantage produces specificity and a blind spot: the framework may undercount ways generative AI creates genuinely new possibilities for learning that do not fit the friction model. That same vantage, across a bounded set of school sites, is also what makes the next phase an <strong>applied</strong> case study rather than a purely conceptual one (see Section VIII).</p>
     </div>
     <blockquote class="pullquote">
       The value of this framework lies in its capacity to name what is educationally at stake when the default tendency of a media environment is to eliminate productive struggle.
       <cite>Section VI.C, the paper's reflexive close</cite>
     </blockquote>
+  </div>
+</section>
+
+<section class="sec" id="design">
+  <div class="inner">
+    <div class="sec-header">
+      <div class="sec-tag">VIII<span class="tag-sub">From literature review to applied case design</span></div>
+      <h2 class="sec-title">The study the gap <em>calls for</em>.</h2>
+    </div>
+    <p class="lede">A literature review earns its keep when it hands a design to the study that follows. The gap named in Section VI is conceptual; the dissertation answers it empirically through a <strong>Merriam-centered applied, bounded, interpretive qualitative case design with qualitative-dominant convergent mixed-methods support</strong>.</p>
+    <div class="body-prose">
+      <p>The case is <strong>K-12 educator and institutional sensemaking about pedagogical friction under conditions of generative AI</strong>. Merriam supplies the controlling fit: an applied case study is, in her terms, particularistic, descriptive, and heuristic, well suited to a problem of practice and read as interpretation in context. Stake and Yin remain useful comparison lenses, Stake for protecting experiential depth and Yin for clarifying what the study is not, but neither governs the design.</p>
+      <p>The four traditions in Section II do not disappear at this transition; they become the <strong>analytic scaffold</strong>. Media ecology and the learning sciences supply the constructs the case sets out to observe, the equity tradition keeps the productive-versus-exclusionary friction distinction honest in the field, and the AI-context sources establish why the bounded setting is urgent now. The constructs mapped in Section IV become candidate codes, not finished findings.</p>
+    </div>
+    <blockquote class="pullquote">
+      A qualitative case study is an intensive, holistic description and analysis of a single instance, phenomenon, or social unit.
+      <cite>Merriam, Qualitative Research and Case Study Applications in Education</cite>
+    </blockquote>
+    <div class="deep-dive">
+      <h3>Why <em>Merriam</em>, not Stake or Yin</h3>
+      <p class="deep-dive-body">The dissertation studies a bounded educational system and a problem of practice, and it seeks applied, descriptive, thematic understanding of how educators and school-system actors make meaning of pedagogical friction. That is the work Merriam's applied case tradition is built for. The mixed-methods strands, quantitative, learner-perspective, and AI-artifact, support the qualitative case through triangulation and joint displays rather than redefining it. Yazan's (2015) comparison of Yin, Merriam, and Stake provides the basis for keeping this language precise without overclaiming.</p>
+    </div>
+    <div class="note"><strong>Where this is worked out.</strong> The full methodology, including the epistemological positioning of Merriam against Stake and Yin, lives in the interactive Methodology Alignment Studio in the mixed-methods portfolio.</div>
+    <div class="mast-actions">
+      <a class="route-link primary" href="https://minerclass.github.io/mixed-methods-portfolio/methodology-alignment/">Methodology Alignment Studio &#8599;</a>
+      <a class="route-link" href="https://minerclass.github.io/mixed-methods-portfolio/">Mixed-Methods Portfolio &#8599;</a>
+    </div>
   </div>
 </section>
 
@@ -1110,6 +1139,13 @@ const sourceRoutes = [
     title: "Find the gap",
     summary: "Focus on what prior tertiary-orality literature reaches, where it stops, and why tertiary algorithmicity names a different axis.",
     sections: ["gap", "tracer", "reflexivity"]
+  },
+  {
+    key: "design",
+    label: "Bridge to the design",
+    title: "Bridge to the design",
+    summary: "Follow the conceptual gap into the dissertation's Merriam-centered applied case design, then out to the methodology studio.",
+    sections: ["gap", "reflexivity", "design"]
   }
 ];
 const routeButtons = document.getElementById("routeButtons");
@@ -1135,7 +1171,7 @@ routeButtons.addEventListener("click", event => {
 });
 renderSourceRoute();
 
-const secIds = ["orientation", "four", "explorer", "map", "tracer", "gap", "reflexivity"];
+const secIds = ["orientation", "four", "explorer", "map", "tracer", "gap", "reflexivity", "design"];
 document.querySelectorAll("#secNav button").forEach(btn => {
   btn.addEventListener("click", () => {
     const target = document.getElementById(btn.dataset.sec);
